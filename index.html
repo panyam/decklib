@@ -40,11 +40,21 @@
     </head>
     <body>
         <center><h1>Decklib - Play with your deck of cards now</h1></center>
-        <strong>First Hand of Cards: </strong>
-        <input type="text" size = "80" placeholder = "eg: AH, AS, TC, QS, KD" />
-        <span id = "firstHandName"></span>
-        <strong>Second Hand of Cards: </strong>
-        <input type="text" size = "80" placeholder = "eg: AH, AS, TC, QS, KD" />
-        <span id = "secondHandName"></span>
+        <div>
+            <strong>First Hand of Cards: </strong>
+            <input type="text" size = "80" placeholder = "eg: AH, AS, TC, QS, KD" />
+            <span id = "firstHandName"></span>
+        </div>
+        <div>
+            <strong>Second Hand of Cards: </strong>
+            <input type="text" size = "80" placeholder = "eg: AH, AS, TC, QS, KD" />
+            <span id = "secondHandName"></span>
+        </div>
+        <input type = button value = "Go" />
     </body>
+    <script langauge = "javascript">
+        $(function() {
+            alert('Loaded');
+        });
+    </script>
 </html>
