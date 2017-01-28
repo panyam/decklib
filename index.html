@@ -59,8 +59,8 @@
 	    	var cards2 = DeckLib.normalizeHand($("#hand2Text").val().split(","));
                 var hand1 = DeckLib.buildHand(cards1, standard_builders);
                 var hand2 = DeckLib.buildHand(cards2, standard_builders);
-		$("#firstHandName").val(hand1.handType());
-		$("#secondHandName").val(hand2.handType());
+		$("#firstHandName").html(hand1.handType());
+		$("#secondHandName").html(hand2.handType());
             });
         });
     </script>
