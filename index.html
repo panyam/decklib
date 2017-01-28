@@ -6,20 +6,35 @@
 	    <script src="./builders.js"></script>
         <script language = "javascript">
             var standard_builders = [
-                DeckLib.PokerHands.RoyalFlushBuilder(5, "RoyalFlush"),
-                DeckLib.PokerHands.StraightFlushBuilder(5, "StraightFlush"),
-                DeckLib.PokerHands.NOfAKindBuilder(4, "4OfAKind"),
-                DeckLib.PokerHands.FullHouseBuilder(3, 2, "FullHouse"),
-                DeckLib.PokerHands.FlushBuilder(5, "Flush"),
-                DeckLib.PokerHands.DefaultStraightBuilder(5, "Straight"),
-                DeckLib.PokerHands.NOfAKindBuilder(-1, 3, "3OfAKind"),
-                DeckLib.PokerHands.NOfAKindBuilder(2, "2Pair", 2),
-                DeckLib.PokerHands.NOfAKindBuilder(2, "1Pair", 1),
+                DeckLib.PokerHands.RoyalFlushBuilder("RoyalFlush", 5),
+                DeckLib.PokerHands.StraightFlushBuilder("StraightFlush", 5),
+                DeckLib.PokerHands.NOfAKindBuilder("4OfAKind", 4),
+                DeckLib.PokerHands.FullHouseBuilder("FullHouse", 3, 2),
+                DeckLib.PokerHands.FlushBuilder("Flush", 5),
+                DeckLib.PokerHands.DefaultStraightBuilder("Straight", 5),
+                DeckLib.PokerHands.NOfAKindBuilder("3OfAKind", 3),
+                DeckLib.PokerHands.NOfAKindBuilder("2Pair", 2, 2),
+                DeckLib.PokerHands.NOfAKindBuilder("1Pair", 2, 1),
                 DeckLib.PokerHands.HighestCardBuilder
             ];
 
-            var cards = DeckLib.normalizeHand(["AH", "AS", "AD", "TH", "TC"]);
-            var hand = DeckLib.buildHand(cards, standard_builders);
+            function testCards(cards) {
+                console.log("Hand: ", cards);
+                cards = DeckLib.normalizeHand(cards);
+                var hand = DeckLib.buildHand(cards, standard_builders);
+                console.log("HandType: ", hand.handType());
+            }
+
+            testCards(["AH", "KH", "QH", "JH", "TH"]);
+            testCards(["AH", "2H", "3H", "4H", "5H"]);
+            testCards(["9H", "TH", "9D", "9C", "9S"]);
+            testCards(["AH", "AS", "AD", "TH", "TC"]);
+            testCards(["AH", "3H", "5H", "8H", "7H"]);
+            testCards(["AH", "5D", "3C", "2H", "4H"]);
+            testCards(["AH", "AD", "AC", "2H", "4H"]);
+            testCards(["AH", "2D", "3C", "2H", "AH"]);
+            testCards(["AH", "4D", "3C", "2H", "AH"]);
+            testCards(["KH", "4D", "3C", "2H", "AH"]);
         </script>
     </head>
 </html>

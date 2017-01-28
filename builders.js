@@ -30,7 +30,7 @@ DeckLib.PokerHands = (function(dh) {
      * A poker hand that consists of N tuples each with m of a kind, followed by single cards.
      * Ideal for building 2 pairs, 3 pairs, 1 pair, 3 of a kind, 4 of a kind etc
      */
-    dh.NOfAKindBuilder = function(nofakind, handName, minCount, maxCount) {
+    dh.NOfAKindBuilder = function(handName, nofakind, minCount, maxCount) {
         return function(cards) {
             /**
              * Make sure ACEs are of "high" value.
@@ -99,7 +99,7 @@ DeckLib.PokerHands = (function(dh) {
     /**
      * A builder for full houses (N and M card groups).
      */
-    dh.FullHouseBuilder = function(ncards, mcards, handName) {
+    dh.FullHouseBuilder = function(handName, ncards, mcards) {
         return function(cards) {
             /**
              * Make sure ACEs are of "high" value.
@@ -162,7 +162,7 @@ DeckLib.PokerHands = (function(dh) {
     /**
      * A builder of flushes (ncards of the same suit).
      */
-    dh.FlushBuilder = function(ncards, handName) {
+    dh.FlushBuilder = function(handName, ncards) {
         return function(cards) {
             /**
              * Make sure ACEs are of "high" value.
@@ -173,10 +173,11 @@ DeckLib.PokerHands = (function(dh) {
             var flush_cards = [];
             var remaining_cards = [];
 
+            var N = cards.length;
             var start = 0;
             var end = 0;
             while (start < N) {
-                while (cards[end].suit == cards[start].suit) {
+                while (end < N && cards[end].suit == cards[start].suit) {
                     end ++;
                 }
                 // everything from start to end inclusive is the same kind of card
@@ -238,6 +239,7 @@ DeckLib.PokerHands = (function(dh) {
                     while (cardsByValue[curr].length > 0) {
                         remaining_cards.unshift(cardsByValue[curr].pop());
                     }
+                    curr --;
                 } else {
                     // see if we have a group of ncards starting from curr, curr - 1, curr - 2 .... curr - ncards - 1
                     var end = curr;
@@ -245,7 +247,6 @@ DeckLib.PokerHands = (function(dh) {
                     if (curr != dl.KING && curr != ncards) runlength ++;
                     for (var i = 0;i < runlength;i++) {
                         if (cardsByValue[end].length == 0) {
-                            end ++;
                             break;
                         }
                         end--;
@@ -253,14 +254,15 @@ DeckLib.PokerHands = (function(dh) {
 
                     // end -> curr (inclusive) denotes a run of cards
                     var found = false;
+                    end ++;
                     if (1 + curr - end == runlength) {
                         // ncards (or -1) cards were found as required so we can do the grouping
-                        var groups = cardsByValue.slice(end, curr + 1);
+                        var groups = cardsByValue.slice(end, curr + 1).reverse();
                         if (curr == dl.KING) {
-                            aceCards.forEach(function(card) { card.value = dl.ACE_MAX; });
+                            aceCards.forEach(function(card) { card.value = dl.ACE_MAJOR; });
                             groups.unshift(aceCards);
                         } else if (curr == ncards) {
-                            aceCards.forEach(function(card) { card.value = dl.ACE_MIN; });
+                            aceCards.forEach(function(card) { card.value = dl.ACE_MINOR; });
                             groups.push(aceCards);
                         } else {
                             // use as is
@@ -284,7 +286,7 @@ DeckLib.PokerHands = (function(dh) {
             // Add all remaining ace cards to the start
             while (aceCards.length > 0) {
                 var card = aceCards.pop();
-                card.value = dl.ACE_MAX;
+                card.value = dl.ACE_MAJOR;
                 remaining_cards.unshift(card);
             }
 
@@ -314,7 +316,7 @@ DeckLib.PokerHands = (function(dh) {
         return dh.StraightBuilder(handName, ncards, function(groups, output_run) {
             // we know we have N straight cards, we can take *any* of it 
             for (var g in groups) {
-                output_run.push(groups.pop());
+                output_run.push(groups[g].pop());
             }
             return true;
         });
@@ -380,7 +382,7 @@ DeckLib.PokerHands = (function(dh) {
                 }
             }
         }
-        return [remaing_suits, the_suit];
+        return [remaining_suits, the_suit];
     }
 
     return dh;

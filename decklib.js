@@ -60,11 +60,11 @@ var DeckLib = (function (dlib) {
         else if (str.startsWith("t"))
             return 10;
         else if (str.startsWith("j"))
-            return JACK;
+            return dlib.JACK;
         else if (str.startsWith("q"))
-            return QUEEN;
+            return dlib.QUEEN;
         else if (str.startsWith("k"))
-            return KING;
+            return dlib.KING;
         else
             return parseInt(str);
         throw Error("Invalid card value string: " + str);
