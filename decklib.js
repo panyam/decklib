@@ -11,6 +11,9 @@ var DeckLib = (function (dlib) {
     dlib.QUEEN = 12;
     dlib.JACK = 11;
 
+    /**
+     * A card constructor that takes a value and a suit.
+     */
     dlib.Card = function(value, suit) {
         this.value = value;
         this.suit = suit;
@@ -19,17 +22,21 @@ var DeckLib = (function (dlib) {
     /**
      * Tells if the card is an ace.
      */
-	dlib.Card.prototype.isAce = function() {
+    dlib.Card.prototype.isAce = function() {
         return this.value == dlib.ACE_MINOR || this.value == dlib.ACE_MAJOR;
     };
 
-	dlib.Card.prototype.compareTo = function(another) {
+    dlib.Card.prototype.compareTo = function(another) {
         if (this.value == another.value)
             return this.suit - another.suit;
         else
             return this.value - another.value;
-	};
+    };
 
+    /**
+     * Given a string value, returns the corresponding suit solely by looking at the
+     * first character of the input.
+     */
     dlib.str2suit = function(str) {
         str = str.toLowerCase();
         if (str.startsWith("c"))
@@ -43,6 +50,9 @@ var DeckLib = (function (dlib) {
         return null;
     }
 
+    /**
+     * Converts a string into a card value.
+     */
     dlib.str2value = function(str) {
         str = str.toLowerCase();
         if (str.startsWith("a"))
@@ -162,7 +172,7 @@ var DeckLib = (function (dlib) {
         }
         return null;
     };
-	return dlib;
+    return dlib;
 }(DeckLib || {}));
 
 DeckLib.Comparators = (function(dc) {
