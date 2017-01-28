@@ -1,0 +1,22 @@
+
+<html>
+    <head>
+	    <script src="./decklib.js"></script>
+	    <script src="./handbuilders.js"></script>
+        <script language = "javascript">
+            var standard_builders = [
+                DeckLib.PokerHands.StraightFlushBuilder,
+                DeckLib.PokerHands.NOfAKindBuilder(4, "4OfAKind"),
+                DeckLib.PokerHands.FullHouseBuilder,
+                DeckLib.PokerHands.FlushBuilder,
+                DeckLib.PokerHands.StraightBuilder,
+                DeckLib.PokerHands.NOfAKindBuilder(3, "3OfAKind"),
+                DeckLib.PokerHands.NPairsBuilder(2, "2Pair"),
+                DeckLib.PokerHands.NPairsBuilder(1, "1Pair"),
+                DeckLib.PokerHands.HighestCardBuilder
+            ];
+
+            var h1 = DeckLib.PokerHands.HighestCardBuilder([]);
+        </script>
+    </head>
+</html>
