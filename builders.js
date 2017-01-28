@@ -91,7 +91,7 @@ DeckLib.PokerHands = (function(dh) {
                     var res = dc.compareCardLists(h1.tuples[i], h2.tuples[i], dc.ByCardValueAsc);
                     if (res != 0) return res;
                 }
-                return dc.compareCompareCardLists(h1.remaining_cards, h2.remaining_cards, dc.ByCardValueAsc);
+                return dc.compareCardLists(h1.remaining_cards, h2.remaining_cards, dc.ByCardValueAsc);
             });
         }
     };
