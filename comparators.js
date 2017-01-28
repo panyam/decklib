@@ -15,6 +15,11 @@ DeckLib.Comparators = (function(dc) {
         return h1.length - h2.length;
     }
 
+    dc.compareHands = function(h1, h2) {
+        if (h1.rank != h2.rank) return h1.rank - h2.rank;
+        return h1.compareTo(h2);
+    };
+
     /**
      * A comparator function to order two cards in ascending order of
      * their values.
