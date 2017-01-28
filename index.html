@@ -50,7 +50,9 @@
             <input type="text" size = "50" placeholder = "eg: AH, AS, TC, QS, KD" id = "hand2Text" value = "9H, TH, 9D, 9C, 9S"/>
             <span id = "secondHandName"></span>
         </div>
+        <div style="padding: 10px; padding-left: 50px"><strong>
         <span id = "comparisonResultSpan"></span>
+        </strong></div>
         <input type = button value = "Go" id = "goButton" />
     </body>
     <script langauge = "javascript">
@@ -62,10 +64,10 @@
                 var hand2 = DeckLib.buildHand(cards2, standard_builders);
                 $("#firstHandName").html(hand1.handType());
                 $("#secondHandName").html(hand2.handType());
-                var cmpResult = DeckLib.Comparators.compareHand(hand1, hand2);
-                if (cmpResults > 0) {
+                var cmpResult = DeckLib.Comparators.compareHands(hand1, hand2);
+                if (cmpResult > 0) {
                     $("#comparisonResultSpan").html("Hand1 wins!!!");
-                } else if (cmpResults < 0) {
+                } else if (cmpResult < 0) {
                     $("#comparisonResultSpan").html("Hand2 wins!!!");
                 } else {
                     $("#comparisonResultSpan").html("We have a Draw!!!");

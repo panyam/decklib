@@ -127,7 +127,7 @@ var DeckLib = (function (dlib) {
      * Hand specific data associated with this hand.
      */
     dlib.Hand.prototype.data = function() {
-        return this._handType;
+        return this._handData;
     }
 
     /**
@@ -142,7 +142,7 @@ var DeckLib = (function (dlib) {
      *  +ve value if hte current hand is greater than the other hand.
      */
     dlib.Hand.prototype.compareTo = function(another) {
-        if (h1.handType !== h2.handType) {
+        if (this.handType() !== another.handType()) {
             throw "This and the other hand are different types.";
         }
         if (typeof(this.comparer) !== "undefined" &&

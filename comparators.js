@@ -7,7 +7,7 @@ DeckLib.Comparators = (function(dc) {
      * Top level method to compare two hands.
      */
     dc.compareCardLists = function(h1, h2, comparator) {
-        var l = min(h1.length, h2.length);
+        var l = Math.min(h1.length, h2.length);
         for (var i = 0;i < l;i++) {
             var res = comparator(h1[i], h2[i]);
             if (res != 0) return res;
