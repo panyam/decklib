@@ -79,6 +79,14 @@ var DeckLib = (function (dlib) {
         return dlib.Card(value, suit)
     };
 
+    dlib.replaceCardValues = function(cards, oldValue, newValue) {
+        cards.forEach(function(card, index) {
+            if (card.value == oldValue) {
+                card.value = newValue;
+            }
+        });
+    };
+
     /**
      * Interface definition of all hand builders that take a set of cards
      * (in no particular order) and specific parameters that control
