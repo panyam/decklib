@@ -42,20 +42,25 @@
         <center><h1>Decklib - Play with your deck of cards now</h1></center>
         <div>
             <strong>Hand 1: </strong>
-            <input type="text" size = "50" placeholder = "eg: AH, AS, TC, QS, KD" />
+            <input type="text" size = "50" placeholder = "eg: AH, AS, TC, QS, KD" id = "hand1Text"/>
             <span id = "firstHandName"></span>
         </div>
         <div>
             <strong>Hand 2: </strong>
-            <input type="text" size = "50" placeholder = "eg: AH, AS, TC, QS, KD" />
+            <input type="text" size = "50" placeholder = "eg: AH, AS, TC, QS, KD" id = "hand2Text"/>
             <span id = "secondHandName"></span>
         </div>
-        <input type = button value = "Go" />
+        <input type = button value = "Go" id = "goButton" />
     </body>
     <script langauge = "javascript">
         $(function() {
-            $("goButton").click(function(event) {
-                alert('Clicked');
+            $("#goButton").click(function(event) {
+	    	var cards1 = DeckLib.normalizeHand($("#hand1Text").val().split(","));
+	    	var cards2 = DeckLib.normalizeHand($("#hand2Text").val().split(","));
+                var hand1 = DeckLib.buildHand(cards1, standard_builders);
+                var hand2 = DeckLib.buildHand(cards2, standard_builders);
+		$("#firstHandName").val(hand1.handType());
+		$("#secondHandName").val(hand2.handType());
             });
         });
     </script>
