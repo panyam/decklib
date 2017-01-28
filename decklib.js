@@ -75,6 +75,7 @@ var DeckLib = (function (dlib) {
      * returns the Card object corresponding to it.
      */
     dlib.str2card = function(cardstr) {
+        cardstr = cardstr.trim();
         var suit = dlib.str2suit(cardstr[1]);
         var value = dlib.str2value(cardstr[0]);
         return new dlib.Card(value, suit)
