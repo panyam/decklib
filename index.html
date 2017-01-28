@@ -8,17 +8,18 @@
             var standard_builders = [
                 DeckLib.PokerHands.RoyalFlushBuilder(5, "RoyalFlush"),
                 DeckLib.PokerHands.StraightFlushBuilder(5, "StraightFlush"),
-                DeckLib.PokerHands.NTuplesMSizedBuilder(4, "4OfAKind"),
+                DeckLib.PokerHands.NOfAKindBuilder(4, "4OfAKind"),
                 DeckLib.PokerHands.FullHouseBuilder(3, 2, "FullHouse"),
                 DeckLib.PokerHands.FlushBuilder(5, "Flush"),
                 DeckLib.PokerHands.DefaultStraightBuilder(5, "Straight"),
-                DeckLib.PokerHands.NTuplesMSizedBuilder(-1, 3, "3OfAKind"),
-                DeckLib.PokerHands.NTuplesMSizedBuilder(2, "2Pair", 2),
-                DeckLib.PokerHands.NTuplesMSizedBuilder(2, "1Pair", 1),
+                DeckLib.PokerHands.NOfAKindBuilder(-1, 3, "3OfAKind"),
+                DeckLib.PokerHands.NOfAKindBuilder(2, "2Pair", 2),
+                DeckLib.PokerHands.NOfAKindBuilder(2, "1Pair", 1),
                 DeckLib.PokerHands.HighestCardBuilder
             ];
 
-            var h1 = DeckLib.PokerHands.HighestCardBuilder([]);
+            var cards = DeckLib.normalizeHand(["AH", "AS", "AD", "TH", "TC"]);
+            var hand = DeckLib.buildHand(cards, standard_builders);
         </script>
     </head>
 </html>

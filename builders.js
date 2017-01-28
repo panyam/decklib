@@ -30,7 +30,7 @@ DeckLib.PokerHands = (function(dh) {
      * A poker hand that consists of N tuples each with m of a kind, followed by single cards.
      * Ideal for building 2 pairs, 3 pairs, 1 pair, 3 of a kind, 4 of a kind etc
      */
-    dh.NTuplesMSizedBuilder = function(ntuples, mofakind, handName, minCount, maxCount) {
+    dh.NOfAKindBuilder = function(nofakind, handName, minCount, maxCount) {
         return function(cards) {
             /**
              * Make sure ACEs are of "high" value.
@@ -39,7 +39,7 @@ DeckLib.PokerHands = (function(dh) {
             cards.sort(dc.ByCardValueDesc);
 
             if (typeof(minCount) === "undefined") {
-                minCount = 0;
+                minCount = 1;
                 maxCount = -1;
             }
 
@@ -54,18 +54,18 @@ DeckLib.PokerHands = (function(dh) {
             var start = 0;
             var end = 0;
             while (start < N) {
-                while (cards[end].value == cards[start].value) {
+                while (end < N && cards[end].value == cards[start].value) {
                     end ++;
                 }
                 // everything from start to end inclusive is the same kind of card
-                var slice = cards.slice(start, end + 1);
-                if (slice.length >= mofakind) {
-                    kinds.push(slice.slice(0, mofakind));
-                    remaining_cards = remaining_cards.concat(slice.slice(mofakind));
+                var slice = cards.slice(start, end);
+                if (slice.length >= nofakind) {
+                    kinds.push(slice.slice(0, nofakind));
+                    remaining_cards = remaining_cards.concat(slice.slice(nofakind));
                 } else {
                     remaining_cards = remaining_cards.concat(slice);
                 }
-                start = end + 1;
+                start = end;
             }
             if (minCount > 0 && kinds.length < minCount) {
                 // We want no less than minCount number of tuples
@@ -77,10 +77,10 @@ DeckLib.PokerHands = (function(dh) {
             }
 
             var handData = {
-                "tuples": tuples,
+                "tuples": kinds,
                 "remaining_cards": remaining_cards
             };
-            return new Hand(0, handName, handData, function(h1, h2) {
+            return new dl.Hand(0, handName, handData, function(h1, h2) {
                 h1 = h1.data();
                 h2 = h2.data();
                 if (h1.tuples.length != h2.tuples.length) {
@@ -107,6 +107,7 @@ DeckLib.PokerHands = (function(dh) {
             dl.replaceCardValues(cards, dl.ACE_MINOR, dl.ACE_MAJOR);
             cards.sort(dc.ByCardValueDesc);
 
+            var N = cards.length;
             var ncard_list = [];
             var mcard_list = [];
             var remaining_cards = [];
@@ -114,10 +115,11 @@ DeckLib.PokerHands = (function(dh) {
             var start = 0;
             var end = 0;
             while (start < N) {
-                while (cards[end].value == cards[start].value) {
+                while (end < N && cards[end].value == cards[start].value) {
                     end ++;
                 }
 
+                var slice = cards.slice(start, end);
                 if (ncard_list.length == 0 && slice.length >= ncards) {
                     ncard_list = slice.slice(0, ncards);
                     remaining_cards = remaining_cards.concat(slice.slice(ncards));
@@ -127,7 +129,7 @@ DeckLib.PokerHands = (function(dh) {
                 } else {
                     remaining_cards = remaining_cards.concat(slice);
                 }
-                start = end + 1;
+                start = end;
             }
 
             if (mcard_list.length != mcards || ncard_list.length != ncards) return null;
@@ -138,7 +140,7 @@ DeckLib.PokerHands = (function(dh) {
                 "remaining_cards": remaining_cards
             };
 
-            return new Hand(0, handName, all_runs, function(h1, h2) {
+            return new dl.Hand(0, handName, handData, function(h1, h2) {
                 h1 = h1.data();
                 h2 = h2.data();
                 if (h1.ncard_list.length != h2.ncard_list.length) {
@@ -178,14 +180,14 @@ DeckLib.PokerHands = (function(dh) {
                     end ++;
                 }
                 // everything from start to end inclusive is the same kind of card
-                var slice = cards.slice(start, end + 1);
+                var slice = cards.slice(start, end);
                 if (flush_cards.length == 0 && slice.length >= ncards) {
                     flush_cards = slice.slice(0, ncards);
                     remaining_cards = remaining_cards.concat(slice.slice(ncards));
                 } else {
                     remaining_cards = remaining_cards.concat(slice);
                 }
-                start = end + 1;
+                start = end;
             }
 
             if (flush_cards.length != ncards) return null;
@@ -195,7 +197,7 @@ DeckLib.PokerHands = (function(dh) {
                 "remaining_cards": remaining_cards
             };
 
-            return new Hand(0, handName, all_runs, function(h1, h2) {
+            return new dl.Hand(0, handName, handData, function(h1, h2) {
                 h1 = h1.data();
                 h2 = h2.data();
                 if (h1.flush_cards.length != h2.flush_cards.length) {
@@ -291,7 +293,7 @@ DeckLib.PokerHands = (function(dh) {
                 "remaining_cards": remaining_cards
             };
 
-            return new Hand(0, handName, all_runs, function(h1, h2) {
+            return new dl.Hand(0, handName, handData, function(h1, h2) {
                 h1 = h1.data();
                 h2 = h2.data();
                 if (h1.straight_cards.length != h2.straight_cards.length) {

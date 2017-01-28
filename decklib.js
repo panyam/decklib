@@ -40,14 +40,14 @@ var DeckLib = (function (dlib) {
     dlib.str2suit = function(str) {
         str = str.toLowerCase();
         if (str.startsWith("c"))
-            suit = dlib.CLUBS
+            return dlib.CLUBS
         else if (str.startsWith("h"))
-            suit = dlib.HEARTS
+            return dlib.HEARTS
         else if (str.startsWith("d"))
             return dlib.DIAMONDS;
         else if (str.startsWith("s"))
             return dlib.SPADES;
-        return null;
+        throw Error("Invalid suit string: " + str);
     }
 
     /**
@@ -56,17 +56,18 @@ var DeckLib = (function (dlib) {
     dlib.str2value = function(str) {
         str = str.toLowerCase();
         if (str.startsWith("a"))
-            suit = 1
+            return 1;
         else if (str.startsWith("t"))
-            suit = 10
+            return 10;
         else if (str.startsWith("j"))
-            suit = JACK
+            return JACK;
         else if (str.startsWith("q"))
-            suit = QUEEN
+            return QUEEN;
         else if (str.startsWith("k"))
-            suit = KING
+            return KING;
         else
-            suit = parseInt(str);
+            return parseInt(str);
+        throw Error("Invalid card value string: " + str);
     }
 
     /**
@@ -76,7 +77,7 @@ var DeckLib = (function (dlib) {
     dlib.str2card = function(cardstr) {
         var suit = dlib.str2suit(cardstr[1]);
         var value = dlib.str2value(cardstr[0]);
-        return dlib.Card(value, suit)
+        return new dlib.Card(value, suit)
     };
 
     dlib.replaceCardValues = function(cards, oldValue, newValue) {
@@ -174,7 +175,7 @@ var DeckLib = (function (dlib) {
             var builder = builders[i];
             var hand = builder(cards);
             if (hand != null) {
-                hand.rank = builders.length - index;
+                hand.rank = builders.length - i;
                 return hand;
             }
         }

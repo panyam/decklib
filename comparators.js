@@ -28,7 +28,7 @@ DeckLib.Comparators = (function(dc) {
      * their values.
      */
     dc.ByCardValueDesc = function(c1, c2) {
-        return c1.value - c2.value;
+        return c2.value - c1.value;
     };
 
     /**
